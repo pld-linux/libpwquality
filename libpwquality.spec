@@ -6,7 +6,7 @@ Summary:	Library for password quality checking and generating random passwords
 Summary(pl.UTF-8):	Biblioteka do sprawdzania jakości oraz generowania losowych haseł
 Name:		libpwquality
 Version:	1.2.0
-Release:	2
+Release:	3
 License:	BSD or GPL v2+
 Group:		Libraries
 Source0:	https://fedorahosted.org/releases/l/i/libpwquality/%{name}-%{version}.tar.bz2
