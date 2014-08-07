@@ -16,7 +16,7 @@ BuildRequires:	cracklib-devel >= 2.8
 BuildRequires:	gettext-devel >= 0.18.2
 BuildRequires:	pam-devel
 BuildRequires:	pkgconfig
-BuildRequires:	python-devel > 2.7
+BuildRequires:	python-devel
 Requires:	cracklib-dicts >= 2.8
 Requires:	pam
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
