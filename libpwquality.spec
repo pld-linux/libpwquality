@@ -1,7 +1,9 @@
+# TODO
+# - split pam package?: -n pam-pam_pwquality
 #
 # Conditional build
 %bcond_without	static_libs	# don't build static library
-#
+
 Summary:	Library for password quality checking and generating random passwords
 Summary(pl.UTF-8):	Biblioteka do sprawdzania jakości oraz generowania losowych haseł
 Name:		libpwquality
