@@ -88,6 +88,9 @@ rm -rf $RPM_BUILD_ROOT
 
 %{__rm} $RPM_BUILD_ROOT/%{_lib}/security/pam_pwquality.{a,la}
 
+# empty version of mr
+%{__rm} -r $RPM_BUILD_ROOT%{_localedir}/mr_IN
+
 %find_lang %{name}
 
 %clean
