@@ -15,7 +15,7 @@ Source0:	https://fedorahosted.org/releases/l/i/libpwquality/%{name}-%{version}.t
 # Source0-md5:	5c8b1d984a9c184fc62a4d07bb36b922
 URL:		https://fedorahosted.org/libpwquality/
 BuildRequires:	cracklib-devel >= 2.8
-BuildRequires:	gettext-devel >= 0.18.2
+BuildRequires:	gettext-tools >= 0.18.2
 BuildRequires:	pam-devel
 BuildRequires:	pkgconfig
 BuildRequires:	python-devel
