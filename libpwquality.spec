@@ -2,23 +2,29 @@
 # - split pam package?: -n pam-pam_pwquality
 #
 # Conditional build
+%bcond_without	python3		# Python 3 module
 %bcond_without	static_libs	# don't build static library
 
 Summary:	Library for password quality checking and generating random passwords
 Summary(pl.UTF-8):	Biblioteka do sprawdzania jakości oraz generowania losowych haseł
 Name:		libpwquality
-Version:	1.2.4
-Release:	2
+Version:	1.3.0
+Release:	1
 License:	BSD or GPL v2+
 Group:		Libraries
 Source0:	https://fedorahosted.org/releases/l/i/libpwquality/%{name}-%{version}.tar.bz2
-# Source0-md5:	5c8b1d984a9c184fc62a4d07bb36b922
+# Source0-md5:	2a3d4ba1d11b52b4f6a7f39622ebf736
+Patch0:		%{name}-python.patch
 URL:		https://fedorahosted.org/libpwquality/
+BuildRequires:	autoconf >= 2.61
+BuildRequires:	automake >= 1:1.9
 BuildRequires:	cracklib-devel >= 2.8
 BuildRequires:	gettext-tools >= 0.18.2
+BuildRequires:	libtool
 BuildRequires:	pam-devel
 BuildRequires:	pkgconfig
 BuildRequires:	python-devel
+%{?with_python3:BuildRequires:	python3-devel >= 1:3.2}
 Requires:	cracklib-dicts >= 2.8
 Requires:	pam
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -59,32 +65,63 @@ Static libpwquality library.
 Statyczna biblioteka libpwquality.
 
 %package -n python-pwquality
-Summary:	Python bindings for the libpwquality library
-Summary(pl.UTF-8):	Wiązania Pythona do biblioteki libpwquality
+Summary:	Python 2 bindings for the libpwquality library
+Summary(pl.UTF-8):	Wiązania Pythona 2 do biblioteki libpwquality
 Group:		Libraries/Python
-Requires:	%{name}-devel = %{version}-%{release}
+Requires:	%{name} = %{version}-%{release}
 
 %description -n python-pwquality
-Python bindings for the libpwquality library.
+Python 2 bindings for the libpwquality library.
 
 %description -n python-pwquality -l pl.UTF-8
-Wiązania Pythona do biblioteki libpwquality.
+Wiązania Pythona 2 do biblioteki libpwquality.
+
+%package -n python3-pwquality
+Summary:	Python 3 bindings for the libpwquality library
+Summary(pl.UTF-8):	Wiązania Pythona 3 do biblioteki libpwquality
+Group:		Libraries/Python
+Requires:	%{name} = %{version}-%{release}
+
+%description -n python3-pwquality
+Python 3 bindings for the libpwquality library.
+
+%description -n python3-pwquality -l pl.UTF-8
+Wiązania Pythona 3 do biblioteki libpwquality.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
+%{__libtoolize}
+%{__aclocal} -I m4
+%{__autoconf}
+%{__autoheader}
+%{__automake}
 %configure \
 	--with-securedir=/%{_lib}/security \
 	%{__enable_disable static_libs static}
 
 %{__make}
 
+%if %{with python3}
+cd python
+CFLAGS="%{rpmcflags} -fno-strict-aliasing" \
+%{__python3} setup.py build --build-base py3
+%endif
+
 %install
 rm -rf $RPM_BUILD_ROOT
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
+
+%if %{with python3}
+cd python
+%{__python3} ../python/setup.py build --build-base py3 install \
+	--root=$RPM_BUILD_ROOT 
+cd ..
+%endif
 
 %{__rm} $RPM_BUILD_ROOT/%{_lib}/security/pam_pwquality.{a,la}
 
@@ -119,6 +156,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libpwquality.la
 %{_includedir}/pwquality.h
 %{_pkgconfigdir}/pwquality.pc
+%{_mandir}/man3/pwquality.3*
 
 %if %{with static_libs}
 %files static
@@ -131,4 +169,11 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{py_sitedir}/pwquality.so
 %if "%{py_ver}" > "2.4"
 %{py_sitedir}/pwquality-%{version}-py*.egg-info
+%endif
+
+%if %{with python3}
+%files -n python3-pwquality
+%defattr(644,root,root,755)
+%attr(755,root,root) %{py3_sitedir}/pwquality.cpython-*.so
+%{py3_sitedir}/pwquality-%{version}-py*.egg-info
 %endif
