@@ -9,7 +9,7 @@ Summary:	Library for password quality checking and generating random passwords
 Summary(pl.UTF-8):	Biblioteka do sprawdzania jakości oraz generowania losowych haseł
 Name:		libpwquality
 Version:	1.3.0
-Release:	3
+Release:	4
 License:	BSD or GPL v2+
 Group:		Libraries
 Source0:	https://fedorahosted.org/releases/l/i/libpwquality/%{name}-%{version}.tar.bz2
@@ -104,10 +104,14 @@ Wiązania Pythona 3 do biblioteki libpwquality.
 
 %{__make}
 
+cd python
+CFLAGS="%{rpmcflags} -fno-strict-aliasing"
+%py_build
+cd ..
+
 %if %{with python3}
 cd python
-CFLAGS="%{rpmcflags} -fno-strict-aliasing" \
-%{__python3} setup.py build --build-base py3
+%py3_build
 %endif
 
 %install
@@ -116,10 +120,13 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
+cd python
+%py_install
+cd ..
+
 %if %{with python3}
 cd python
-%{__python3} ../python/setup.py build --build-base py3 install \
-	--root=$RPM_BUILD_ROOT 
+%py3_install
 cd ..
 %endif
 
