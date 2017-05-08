@@ -12,10 +12,11 @@ Version:	1.3.0
 Release:	5
 License:	BSD or GPL v2+
 Group:		Libraries
-Source0:	https://fedorahosted.org/releases/l/i/libpwquality/%{name}-%{version}.tar.bz2
+#Source0Download: https://github.com/libpwquality/libpwquality/releases
+Source0:	https://github.com/libpwquality/libpwquality/releases/download/libpwquality-%{version}/%{name}-%{version}.tar.bz2
 # Source0-md5:	2a3d4ba1d11b52b4f6a7f39622ebf736
 Patch0:		%{name}-python.patch
-URL:		https://fedorahosted.org/libpwquality/
+URL:		https://github.com/libpwquality/libpwquality
 BuildRequires:	autoconf >= 2.61
 BuildRequires:	automake >= 1:1.9
 BuildRequires:	cracklib-devel >= 2.8
