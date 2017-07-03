@@ -22,7 +22,7 @@ BuildRequires:	gettext-tools >= 0.18.2
 BuildRequires:	libtool
 BuildRequires:	pam-devel
 BuildRequires:	pkgconfig
-BuildRequires:	python-devel
+BuildRequires:	python-devel >= 2
 %{?with_python3:BuildRequires:	python3-devel >= 1:3.2}
 Suggests:	cracklib-dicts >= 2.8
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -39,12 +39,16 @@ wykorzystuje bibliotekę cracklib oraz słowniki crackliba do
 wykonywania testów.
 
 %package -n pam-pam_pwquality
-Summary:	pam_pwquality
+Summary:	PAM module for password quality checking using libpwquality
+Summary(pl.UTF-8):	Moduł PAM do sprawdzania jakości haseł przy użyciu libpwquality
 Group:		Base
 Requires:	%{name} = %{version}-%{release}
 
 %description -n pam-pam_pwquality
-pam_pwquality.
+PAM module for password quality checking using libpwquality.
+
+%description -n pam-pam_pwquality -l pl.UTF-8
+Moduł PAM do sprawdzania jakości haseł przy użyciu libpwquality.
 
 %package devel
 Summary:	Header files for libpwquality library
