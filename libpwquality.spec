@@ -24,7 +24,7 @@ BuildRequires:	pam-devel
 BuildRequires:	pkgconfig
 BuildRequires:	python-devel
 %{?with_python3:BuildRequires:	python3-devel >= 1:3.2}
-Requires:	cracklib-dicts >= 2.8
+Suggests:	cracklib-dicts >= 2.8
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
