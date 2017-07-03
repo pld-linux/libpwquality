@@ -1,5 +1,3 @@
-# TODO
-# - split pam package?: -n pam-pam_pwquality
 #
 # Conditional build
 %bcond_without	python3		# Python 3 module
@@ -27,7 +25,6 @@ BuildRequires:	pkgconfig
 BuildRequires:	python-devel
 %{?with_python3:BuildRequires:	python3-devel >= 1:3.2}
 Requires:	cracklib-dicts >= 2.8
-Requires:	pam
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -40,6 +37,14 @@ libpwquality to biblioteka do sprawdzania jakości haseł oraz
 generowania haseł losowych przechodzących te testy. Biblioteka
 wykorzystuje bibliotekę cracklib oraz słowniki crackliba do
 wykonywania testów.
+
+%package -n pam-pam_pwquality
+Summary:	pam_pwquality
+Group:		Base
+Requires:	%{name} = %{version}-%{release}
+
+%description -n pam-pam_pwquality
+pam_pwquality.
 
 %package devel
 Summary:	Header files for libpwquality library
@@ -148,11 +153,14 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/pwscore
 %attr(755,root,root) %{_libdir}/libpwquality.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libpwquality.so.1
-%attr(755,root,root) /%{_lib}/security/pam_pwquality.so
 %config(noreplace) %verify(not md5 mtime size) /etc/security/pwquality.conf
 %{_mandir}/man1/pwmake.1*
 %{_mandir}/man1/pwscore.1*
 %{_mandir}/man5/pwquality.conf.5*
+
+%files -n pam-pam_pwquality
+%defattr(644,root,root,755)
+%attr(755,root,root) /%{_lib}/security/pam_pwquality.so
 %{_mandir}/man8/pam_pwquality.8*
 
 %files devel
