@@ -8,13 +8,13 @@
 Summary:	Library for password quality checking and generating random passwords
 Summary(pl.UTF-8):	Biblioteka do sprawdzania jakości oraz generowania losowych haseł
 Name:		libpwquality
-Version:	1.3.0
-Release:	5
+Version:	1.4.0
+Release:	1
 License:	BSD or GPL v2+
 Group:		Libraries
-#Source0Download: https://github.com/libpwquality/libpwquality/releases
+# Source0Download: https://github.com/libpwquality/libpwquality/releases
 Source0:	https://github.com/libpwquality/libpwquality/releases/download/libpwquality-%{version}/%{name}-%{version}.tar.bz2
-# Source0-md5:	2a3d4ba1d11b52b4f6a7f39622ebf736
+# Source0-md5:	b8defcc7280a90e9400d6689c93a279c
 Patch0:		%{name}-python.patch
 URL:		https://github.com/libpwquality/libpwquality
 BuildRequires:	autoconf >= 2.61
@@ -132,9 +132,6 @@ cd ..
 %endif
 
 %{__rm} $RPM_BUILD_ROOT/%{_lib}/security/pam_pwquality.{a,la}
-
-# empty version of mr
-%{__rm} -r $RPM_BUILD_ROOT%{_localedir}/mr_IN
 
 %find_lang %{name}
 
