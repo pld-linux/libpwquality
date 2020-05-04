@@ -138,7 +138,10 @@ cd python
 cd ..
 %endif
 
-%{__rm} $RPM_BUILD_ROOT/%{_lib}/security/pam_pwquality.{a,la}
+%{__rm} $RPM_BUILD_ROOT/%{_lib}/security/pam_pwquality.la
+%if %{with static_libs}
+%{__rm} $RPM_BUILD_ROOT/%{_lib}/security/pam_pwquality.a
+%endif
 
 %find_lang %{name}
 
