@@ -1,18 +1,18 @@
 #
 # Conditional build
 %bcond_without	python3		# Python 3 module
-%bcond_without	static_libs	# don't build static library
+%bcond_without	static_libs	# static library
 
 Summary:	Library for password quality checking and generating random passwords
 Summary(pl.UTF-8):	Biblioteka do sprawdzania jakości oraz generowania losowych haseł
 Name:		libpwquality
-Version:	1.4.2
-Release:	5
+Version:	1.4.5
+Release:	1
 License:	BSD or GPL v2+
 Group:		Libraries
 # Source0Download: https://github.com/libpwquality/libpwquality/releases
 Source0:	https://github.com/libpwquality/libpwquality/releases/download/libpwquality-%{version}/%{name}-%{version}.tar.bz2
-# Source0-md5:	ae6e61fc33f5dac0de5e847eb7520d71
+# Source0-md5:	6b70e355269aef0b9ddb2b9d17936f21
 URL:		https://github.com/libpwquality/libpwquality
 BuildRequires:	autoconf >= 2.61
 BuildRequires:	automake >= 1:1.9
