@@ -1,5 +1,6 @@
 #
 # Conditional build
+%bcond_without	python2		# Python 2 module
 %bcond_without	python3		# Python 3 module
 %bcond_without	static_libs	# static library
 
@@ -21,7 +22,7 @@ BuildRequires:	gettext-tools >= 0.18.2
 BuildRequires:	libtool
 BuildRequires:	pam-devel
 BuildRequires:	pkgconfig
-BuildRequires:	python-devel >= 2
+%{?with_python2:BuildRequires:	python-devel >= 2}
 %{?with_python3:BuildRequires:	python3-devel >= 1:3.2}
 Suggests:	cracklib-dicts >= 2.8
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -108,14 +109,17 @@ Wiązania Pythona 3 do biblioteki libpwquality.
 %{__automake}
 %configure \
 	--with-securedir=/%{_lib}/security \
+	--disable-python-bindings \
 	%{__enable_disable static_libs static}
 
 %{__make}
 
+%if %{with python2}
 cd python
 CFLAGS="%{rpmcflags} -fno-strict-aliasing"
 %py_build
 cd ..
+%endif
 
 %if %{with python3}
 cd python
@@ -128,9 +132,11 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
+%if %{with python2}
 cd python
 %py_install
 cd ..
+%endif
 
 %if %{with python3}
 cd python
@@ -182,11 +188,13 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libpwquality.a
 %endif
 
+%if %{with python2}
 %files -n python-pwquality
 %defattr(644,root,root,755)
 %attr(755,root,root) %{py_sitedir}/pwquality.so
 %if "%{py_ver}" > "2.4"
 %{py_sitedir}/pwquality-%{version}-py*.egg-info
+%endif
 %endif
 
 %if %{with python3}
